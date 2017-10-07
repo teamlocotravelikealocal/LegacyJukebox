@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/quince');
+mongoose.connect('mongodb://loco:123@ds111885.mlab.com:11885/loco-legacy');
 
 mongoose.connection
   .once('open', () => {
