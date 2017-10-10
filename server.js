@@ -1,6 +1,9 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+// *** Database ***
+const User = require('./db/user');
+const Song = require('./db/song');
 
 // *** Webpack ***
 const env = require('./env/credentials.js');
@@ -23,10 +26,6 @@ if (!env.prod) {
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/public'));
-
-// *** Database ***
-const User = require('./db/user');
-const Song = require('./db/song');
 
 // *** Parser ***
 const bodyParser = require('body-parser');
@@ -125,7 +124,7 @@ app.post('/signup', (req, res) => {
   var newUser = new User({
     name: req.body.username
   });
-
+  console.log('user');
   User.findOne({name: req.body.username})
   .then((user) => {
     if (!user) {
