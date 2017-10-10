@@ -55,7 +55,6 @@ exports.handleHostLogin = (req, res) => {
   console.log(credentials.redirect_uri)
   const state = generateRandomString(16);
   const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
-
   res.cookie('spotify_auth_state', state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -102,7 +101,8 @@ exports.redirectAfterLogin = (req, res) => {
       res.redirect('/#' +
         querystring.stringify({
           error: 'invalid_token'
-        }));
+        })
+      );
     }
   });
 };

@@ -85,7 +85,9 @@ class Playlist extends React.Component {
   getDeviceId() {
     spotifyApi.getMyDevices()
       .then((data) => {
-        this.setState({deviceId : data.devices[0].id})
+        //if (data.length > 0) {
+          this.setState({deviceId : data.devices[0].id})
+       // }
       }, (err) =>{
         console.error(err);
       });
