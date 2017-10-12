@@ -1,3 +1,6 @@
+//------------------ THIS FILE IS NOT USED ---------------------------
+//--------THE RESPONSE OBJECT CANNOT BE PROPERLY HANDLED WITHIN AXIOS
+
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
@@ -8,7 +11,8 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ''
+      username: '',
+      password:''
     }
     this.handleChange = this.handleChange.bind(this);
     this.signUp = this.signUp.bind(this);
@@ -16,7 +20,6 @@ class Signup extends React.Component {
 
   handleChange(e) {
     let newState = {};
-
     newState[e.target.name] = e.target.value;
     this.setState(newState);
   }
@@ -24,16 +27,27 @@ class Signup extends React.Component {
   signUp(e) {
     let newUser = {};
     newUser.username = this.state.username;
-    axios.post('/signup', newUser)
+    newUser.password = this.state.password;
+    if (newUser.username.length === 0 || newUser.password.length === 0) {
+      return;
+    }
+    console.log(newUser.username, newUser.password);
+    axios.post('/locosignup', newUser)
     .then((response) => {
-      this.props.history.push('/')
-    })
+      if (response.data === 'User already exists!') {
+        this.props.history.push('/');
+      }
+      //------------------ THIS FILE IS NOT USED ---------------------------
+      //--------THE RESPONSE OBJECT CANNOT BE PROPERLY HANDLED WITHIN AXIOS
+    });
   }
 
   render() {
     return (
       <div>
-        <TextField onChange={this.handleChange} name="username" value={this.state.username} hintText="Username"/>
+        <TextField onChange={this.handleChange} name="username" value={this.state.username} hintText="Username" required={true}/>
+        <br />
+        <TextField onChange={this.handleChange} name="password" type="password" value={this.state.password} hintText="Password"/>
         <br />
         <br />
         <FlatButton onClick={this.signUp} label="Sign Up" />

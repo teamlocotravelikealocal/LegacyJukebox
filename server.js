@@ -4,6 +4,7 @@ const app = express();
 // *** Database ***
 const User = require('./db/user');
 const Song = require('./db/song');
+var path = require('path');
 
 // *** Webpack ***
 const env = require('./env/credentials.js');
@@ -24,8 +25,16 @@ if (!env.prod) {
   }));
 }
 
+//------------------------------TEAM LOCO-----------------------
+// set views to look in the public directory
+app.set('views', path.join(__dirname, 'src'));
+// set app view engine html to render ejs files
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+//--------------------------------------------------------------
+
 // *** Static Assets ***
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/src'));
 
 // *** Parser ***
 const bodyParser = require('body-parser');
@@ -45,8 +54,25 @@ app.use(session({
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
+const locoHelpers = require('./helpers/locoHelpers.js');
 
 // *** Routes ***
+
+//------------------------------TEAM LOCO-----------------------
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+  next();
+});
+var staticRouter = express.Router();
+staticRouter.get('/', locoHelpers.handleGetRoot);
+staticRouter.post('/locosignup', locoHelpers.handleSignup);
+staticRouter.post('/locologin', locoHelpers.handleLogin);
+staticRouter.get('/logout', locoHelpers.handleLogout);
+app.use(staticRouter);
+app.use(express.static(__dirname + '/src'));
+//--------------------------------------------------------------
 
 // fetch top 50 songs by netVoteCount from songs collection and send to client
 app.get('/songs', (req, res) => {
