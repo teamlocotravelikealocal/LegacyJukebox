@@ -20,13 +20,13 @@ class Search extends React.Component{
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
-    // this.getAllUsers = this.getAllUsers.bind(this);
-    // this.handleUserChange = this.handleUserChange.bind(this);
+    this.getAllUsers = this.getAllUsers.bind(this);
+    this.handleUserChange = this.handleUserChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.getAllUsers();
-  // }
+  componentDidMount() {
+    this.getAllUsers();
+  }
 
   onSearch(query){
     axios.get('/songs/search', {
@@ -53,42 +53,40 @@ class Search extends React.Component{
     newSong.image = song.album.images[1].url;
     newSong.link = song.external_urls.spotify;
     newSong.artist = song.artists[0].name;
-    newSong.userName = this.state.name;
-    // if(this.state.currentUser === '') {
-    //   newSong.userName = 'anonymous';
-    // } else {
-    //   newSong.userName = this.state.currentUser.name;
-    // }
+    if(this.state.currentUser === '') {
+      newSong.userName = 'anonymous';
+    } else {
+      newSong.userName = this.state.currentUser.name;
+    }
     axios.post('/songs', newSong)
     .then((response) => {
-      // window.location.href = "/hostLogin";
-      window.location.href = "/";
+      window.location.href = "/hostLogin";
     })
     .catch((err) => {
       console.log(err);
     });
   }
 
-  // handleUserChange (user){
-  //   this.setState({
-  //     currentUser: user,
-  //   });
-  //   if(user.addedSongs.length > 0) {
-  //     this.setState({usersSongs: user.addedSongs})
-  //   }
-  // };
+  handleUserChange (user){
+    this.setState({
+      currentUser: user,
+    });
+    if(user.addedSongs.length > 0) {
+      this.setState({usersSongs: user.addedSongs})
+    }
+  };
 
-  // getAllUsers() {
-  //   axios.get(`/users`)
-  //   .then((response) => {
-  //     this.setState({
-  //      users: response.data
-  //     })
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  // }
+  getAllUsers() {
+    axios.get(`/users`)
+    .then((response) => {
+      this.setState({
+       users: response.data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   render() {
     console.log(this.state.name);
@@ -104,11 +102,11 @@ class Search extends React.Component{
     return (
       <div style={styles}>
         <div style={styles.inside}>
-        {/* <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>*/}
-        <TextField name="selectUser" onChange={this.onChange} hintText="Search a song"/>
-        {/* <br />
+        <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>
+        <TextField name="selectUser" onChange={this.onChange}/>
         <br />
-        <Link to="/signup">Don't see your name? Sign up here!</Link> */}
+        <br />
+        <Link to="/signup">Don't see your name? Sign up here!</Link>
         <br />
         <br />
         <RaisedButton onClick={this.onSearch} label="Search"/>
