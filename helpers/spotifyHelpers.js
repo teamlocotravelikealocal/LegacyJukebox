@@ -52,7 +52,7 @@ const generateRandomString = (length) => {
 
 //redirect host user to Spotify login page to obtain authorization code
 exports.handleHostLogin = (req, res) => {
-  console.log(credentials.redirect_uri)
+  //console.log(credentials.redirect_uri)
   const state = generateRandomString(16);
   const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
   res.cookie('spotify_auth_state', state);
@@ -90,8 +90,8 @@ exports.redirectAfterLogin = (req, res) => {
 
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
-
       //redirect host user back to playlist page and pass token to browser
+      //console.log(req.session.user);
       res.redirect(credentials.redirect_uri + '#' +
         querystring.stringify({
           access_token: access_token,

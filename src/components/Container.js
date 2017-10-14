@@ -10,15 +10,22 @@ import Search from './Search';
 class Container extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {name: this.props.name}
+    this.state = {
+      name: this.props.name,
+      user: this.props.user
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({user: nextProps.user});
   }
 
   render() {
     return (
       <MuiThemeProvider>
         <Switch>
-          <Route exact path='/' component={Playlist}/>
-          <Route exact path='/search' render={()=><Search name={this.state.name}/>}/>
+          <Route exact path='/' render={()=><Playlist name={this.state.name} user={this.state.user}/>}/>
+          <Route exact path='/search' render={()=><Search name={this.state.name} user={this.state.user}/>}/>
         </Switch>
       </MuiThemeProvider>
     )

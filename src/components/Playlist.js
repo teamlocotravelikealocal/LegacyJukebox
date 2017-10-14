@@ -14,7 +14,8 @@ class Playlist extends React.Component {
       songs: [],
       currentSong: '',
       deviceId: '',
-      currentUser: 'annonymous'
+      currentUser: this.props.name,
+      user: this.props.user
     }
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
@@ -41,35 +42,59 @@ class Playlist extends React.Component {
   }
 
   upVote(song) {
-    song.vote = 1;
-    axios.put('/song', song)
-    .then((response) => {
-      this.getAllSongs();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    var found = false;
+    if (song.usersVoted) {
+      for (var i = 0; i < song.usersVoted.length; i++) {
+        if (this.state.currentUser === song.usersVoted[i]) {
+          found = true;
+          break;
+        }
+      }
+    }
+    if (!found) {
+      song.vote = 1;
+      song.votedUser = this.state.currentUser;
+      axios.put('/song', song)
+      .then((response) => {
+        this.getAllSongs();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   }
 
   downVote(song) {
-    song.vote = -1;
-    axios.put('/song', song)
-    .then((response) => {
-      this.getAllSongs();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    var found = false;
+    if (song.usersVoted) {
+      for (var i = 0; i < song.usersVoted.length; i++) {
+        if (this.state.currentUser === song.usersVoted[i]) {
+          found = true;
+          break;
+        }
+      }
+    }
+    if (!found) {
+      song.vote = -1;
+      song.votedUser = this.state.currentUser;
+      axios.put('/song', song)
+      .then((response) => {
+        this.getAllSongs();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   }
 
   getSpotifyToken() {
     const getHashParams = () => {
-    let hashParams = {};
-    let e, r = /([^&;=]+)=?([^&;]*)/g;
-    let q = window.location.hash.substring(1);
-    while ( e = r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
+      let hashParams = {};
+      let e, r = /([^&;=]+)=?([^&;]*)/g;
+      let q = window.location.hash.substring(1);
+      while ( e = r.exec(q)) {
+        hashParams[e[1]] = decodeURIComponent(e[2]);
+      }
       return hashParams;
     }
 
@@ -151,7 +176,7 @@ class Playlist extends React.Component {
           {
             this.state.songs && this.state.songs.map((song, i) => {
               return (
-                <PlaylistEntry index={i+1} downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
+                <PlaylistEntry index={i+1} user={this.state.currentUser} downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
               )
             })
           }

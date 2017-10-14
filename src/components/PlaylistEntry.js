@@ -51,16 +51,22 @@ const PlaylistEntry = (props) => {
           <CardText>
             Added by: {props.Song.userName}
           </CardText>
+         
           <CardActions>
             <div style={divStyle}>
+              {props.user !== 'not logged in' &&
               <FloatingActionButton style={buttonStyle} onClick={handleUpVote} mini={true}>
                 +{props.Song.upVoteCount}
               </FloatingActionButton>
+              }
+              {props.user !== 'not logged in' &&
               <FloatingActionButton style={buttonStyle} onClick={handleDownVote} mini={true} secondary={true}>
                 -{props.Song.downVoteCount}
               </FloatingActionButton>
+              }
             </div>
           </CardActions>
+          
       </Card>
     </div>
   )

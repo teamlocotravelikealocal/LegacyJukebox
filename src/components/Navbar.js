@@ -48,7 +48,7 @@ class Navbar extends React.Component {
         >
           <MenuItem onClick={this.handleClose}><Link to="/">Playlist</Link></MenuItem>
           {this.state.name !== 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><Link to="/search">Search</Link></MenuItem>
+          <MenuItem onClick={this.handleClose}><Link to="/search">Find a song</Link></MenuItem>
           }
           {this.state.name === 'not logged in' &&
           <MenuItem onClick={this.handleClose}><a href="/locologin.html">Log In</a></MenuItem>
@@ -57,9 +57,11 @@ class Navbar extends React.Component {
           <MenuItem onClick={this.handleClose}><a href="/locosignup.html">Sign Up</a></MenuItem>
           }
           {this.state.name !== 'not logged in' &&
+          <MenuItem onClick={this.handleClose}><a href="/hostLogin">Sign In With Spotify</a></MenuItem>
+          }
+          {this.state.name !== 'not logged in' &&
           <MenuItem onClick={this.handleClose}><a href="/logout">Log Out</a></MenuItem>
           }
-          <MenuItem onClick={this.handleClose}><a href="/hostLogin">Sign In With Spotify</a></MenuItem>
         </Drawer>
       </div>      
     )

@@ -67,6 +67,7 @@ app.use(function(req, res, next) {
 });
 var staticRouter = express.Router();
 staticRouter.get('/', locoHelpers.handleGetRoot);
+staticRouter.get('/users/:name', locoHelpers.handleGetUser);
 staticRouter.post('/locosignup', locoHelpers.handleSignup);
 staticRouter.post('/locologin', locoHelpers.handleLogin);
 staticRouter.get('/logout', locoHelpers.handleLogout);
@@ -87,7 +88,7 @@ app.get('/songs/search', (req, res) => {
   spotifyHelpers.getTrackSearchResults(req.query.query)
   .then((results) => {
       res.json(results);
-    });
+  });
 });
 
 // add song to both user collection and songs collection
@@ -117,6 +118,7 @@ app.put('/song', (req, res) => {
   Song.findOne({name: req.body.name})
   .then(function(song) {
     if (song) {
+      song.usersVoted.push(req.body.votedUser);
       if(req.body.vote > 0) {
         song.upVoteCount++;
       } else {
