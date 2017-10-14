@@ -13,8 +13,8 @@ class Search extends React.Component{
       query: '',
       results: [],
       users: [],
-      currentUser: '',
-      usersSongs: [],
+      currentUser: this.props.user,
+      usersSongs: this.props.user.addedSongs,
       name: this.props.name
     }
     this.onSearch = this.onSearch.bind(this);
@@ -24,9 +24,22 @@ class Search extends React.Component{
     // this.handleUserChange = this.handleUserChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.getAllUsers();
-  // }
+  componentDidMount() {
+    // console.log(this.props.user.addedSongs);
+    // this.setState({
+    //   usersSongs: this.props.user.addedSongs
+    // });
+    // axios.get('/users/' + this.state.name)
+    // .then((response) => {
+    //   this.setState({
+    //    currentUser: response.data,
+    //    usersSongs: response.data.addedSongs
+    //   });
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+  }
 
   onSearch(query){
     axios.get('/songs/search', {
@@ -91,7 +104,6 @@ class Search extends React.Component{
   // }
 
   render() {
-    console.log(this.state.name);
     const styles = {
       inside: {
         width: '30%',
@@ -106,12 +118,16 @@ class Search extends React.Component{
         <div style={styles.inside}>
         {/* <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>*/}
         <TextField name="selectUser" onChange={this.onChange} hintText="Search a song"/>
+        <br />
+        Song Limit: 4
         {/* <br />
         <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link> */}
         <br />
         <br />
+        {this.state.usersSongs && this.state.usersSongs.length < 4 &&
         <RaisedButton onClick={this.onSearch} label="Search"/>
+        }
         <div>
         {
         this.state.results && this.state.results.map((result, i) => {

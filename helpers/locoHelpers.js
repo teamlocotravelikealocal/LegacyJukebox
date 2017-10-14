@@ -81,3 +81,14 @@ exports.handleLogout = function(req, res) {
     res.redirect('/');
   });
 };
+
+exports.handleGetUser = function(req, res) {
+  var name = req.params.name;
+  User.findOne({name:name}, function(error, user){
+    if (error) {
+      console.log(err);
+    } else {
+      res.send(user);
+    }
+  });
+}
