@@ -41,10 +41,10 @@ exports.getTrackSearchResults = (queryString) => {
 
 //used for checking state of browser for authentication
 const generateRandomString = (length) => {
-  let text = '';
+  var text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < length; i++) {
+  for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
