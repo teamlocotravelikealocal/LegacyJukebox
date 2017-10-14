@@ -124,6 +124,13 @@ app.put('/song', (req, res) => {
       } else {
         song.downVoteCount++;
       }
+      // remove songs when downVoteCount is more than upVoteCount
+      if (song.downVoteCount > song.upVoteCount) {
+        const songId = req.body._id;
+        Song.remove({'_id': songId}, (err) => {
+          if (err) { console.log(err); }
+        });
+      }
       song.save();
       res.sendStatus(201);
     }
