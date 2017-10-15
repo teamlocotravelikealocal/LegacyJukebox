@@ -85,10 +85,17 @@ app.get('/songs', (req, res) => {
 
 // fetch song research results and send to client
 app.get('/songs/search', (req, res) => {
+  if (req.query.searchBy === 'artist') {
+    spotifyHelpers.getTrackSearchResults(req.query.query,'searchByArtist')
+    .then((results) => {
+        res.json(results);
+    });
+  } else {
   spotifyHelpers.getTrackSearchResults(req.query.query)
-  .then((results) => {
-      res.json(results);
-  });
+    .then((results) => {
+        res.json(results);
+    });
+  }
 });
 
 // add song to both user collection and songs collection
