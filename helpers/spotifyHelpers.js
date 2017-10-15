@@ -18,16 +18,23 @@ const searchAuthOptions = {
 
 
 //use Spotify API credentials to get search results without needing to use Oauth
-exports.getTrackSearchResults = (queryString) => {
+exports.getTrackSearchResults = (queryString,searchBy) => {
   return new Promise((resolve, reject) => {
     request.post(searchAuthOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
+        var type = '';
+        if (searchBy === 'searchByArtist') {
+          type = 'artist:';
+        } else {
+          type = '';
+        }
         const token = body.access_token;
         const options = {
-          url: `https://api.spotify.com/v1/search?q=${queryString}&type=track&market=US&limit=10`,
+          url: `https://api.spotify.com/v1/search?q=${type}${queryString}&type=track&market=US&limit=10`,
           headers: {'Authorization': 'Bearer ' + token},
           json: true
         };
+        //console.log(options)
         request.get(options, (error, response, body) => {
           if (error) {
             reject(error);

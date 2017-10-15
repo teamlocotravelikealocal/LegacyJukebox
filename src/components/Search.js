@@ -15,9 +15,11 @@ class Search extends React.Component{
       users: [],
       currentUser: this.props.user,
       usersSongs: this.props.user.addedSongs,
-      name: this.props.name
+      name: this.props.name,
+      searchByValue: 'Search By Artist Name'
     }
     this.onSearch = this.onSearch.bind(this);
+    this.searchByChange = this.searchByChange.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
     // this.getAllUsers = this.getAllUsers.bind(this);
@@ -41,10 +43,19 @@ class Search extends React.Component{
     // });
   }
 
+  searchByChange(e) {
+    this.setState({ searchByValue: e.target.value });
+  }
+
   onSearch(query){
+    var searchBy = 'track';
+    if (this.state.searchByValue == 'Search By Artist Name') {
+      searchBy = 'artist';
+    }
     axios.get('/songs/search', {
       params: {
-        query: this.state.query
+        query: this.state.query,
+        searchBy: searchBy
       }
     })
     .then((response) => {
@@ -123,6 +134,12 @@ class Search extends React.Component{
         {/* <br />
         <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link> */}
+        <br />
+        <br />
+        <select onChange={this.searchByChange} value={this.state.searchByValue}>
+          <option value='Search By Artist Name'>Search By Artist Name</option>
+          <option value='Search By Track Name'>Search By Track Name</option>
+        </select>
         <br />
         <br />
         {this.state.usersSongs && this.state.usersSongs.length < 4 &&
