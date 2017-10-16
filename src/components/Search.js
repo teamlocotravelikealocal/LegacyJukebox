@@ -130,7 +130,9 @@ class Search extends React.Component{
         {/* <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>*/}
         <TextField name="selectUser" onChange={this.onChange} hintText="Search a song"/>
         <br />
-        Song Limit: 4
+        {this.state.usersSongs &&
+        <span>Remaining songs to add: {4 - this.state.usersSongs.length}</span>
+        }
         {/* <br />
         <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link> */}
