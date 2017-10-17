@@ -5,6 +5,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 
 const SearchEntry = (props) => {
+  {console.log(props.Result)}
   const clickHandler = () => {
     props.onAdd(props.Result);
   }
@@ -17,13 +18,18 @@ const SearchEntry = (props) => {
     float:'left',
     padding: '2px'
   }
+
+  const searchEntryTitleStyle = {
+    overflow: 'visible',
+    height: '185px'
+  }
   return(
     <div>
       <Card style={cardStyle}>
         <CardMedia>
-          <img src={props.Result.image} alt="" />
+          <iframe src={'https://embed.spotify.com/?uri=spotify:track:' + props.Result.id} width="300" height="280" frameBorder="0" allowTransparency="true"></iframe>
         </CardMedia>
-        <CardTitle title={props.Result.name} subtitle={props.Result.artists[0].name} />
+        <CardTitle style={searchEntryTitleStyle} title={props.Result.name} subtitle={props.Result.artists[0].name} />
         <CardActions>
           <div>
             <FloatingActionButton onClick={clickHandler} mini={true}>
