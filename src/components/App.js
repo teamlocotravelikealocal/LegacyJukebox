@@ -28,6 +28,16 @@ class App extends React.Component {
   }
 
   render() {
+    const textStyle = {
+      textAlign: 'center',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 'bold',
+      marginTop: '40px',
+      color: '#128d9c'
+    }
+    const userNameStyle = {
+      textTransform : 'capitalize'
+    }
     console.log(this.props);
     return (
       <div>
@@ -36,10 +46,10 @@ class App extends React.Component {
           <Navbar name={this.state.name}/>
         </MuiThemeProvider>
         {this.state.name !== 'not logged in' &&
-        <div>Welcome {this.state.name}! Add a song, vote a song or sign in with spotify to play the first song in the list.</div>
+        <div style={textStyle}>Welcome <span style={userNameStyle}>{this.state.name}</span>! Add a song, vote a song or sign in with spotify to play the first song in the list.</div>
         }
         {this.state.name === 'not logged in' &&
-        <div>Login to add, vote or play a song.</div>
+        <div style={textStyle}>Login to add, vote or play a song.</div>
         }
         <Container name={this.state.name} user={this.state.user}/>
       </div>

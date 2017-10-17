@@ -144,22 +144,29 @@ class Playlist extends React.Component {
   }
 
   render() {
+
     const playerStyle = {
-      display: 'inline-block',
-      width: '50%',
+      display: 'block',
+      width: '100%',
       verticalAlign: 'top',
-      textAlign: 'center',
-      position: 'fixed'
+      textAlign: 'center'
     }
     const playListStyle = {
-      display: 'inline-block',
-      width:'50%',
-      float: 'right'
+      display: 'block',
+      float: 'none',
+      width: 'calc(100% - 34px)',
+      maxWidth: '1600px',
+      margin: '100px auto'
     }
     const playButtonStyle = {
       width: '100%',
       margin: '16px',
       textAlign: 'center'
+    }
+
+    const titleWrapStyle = {
+      overflow: 'visible',
+      height: '119px'
     }
       return (
         <div>

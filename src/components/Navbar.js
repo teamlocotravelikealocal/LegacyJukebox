@@ -30,6 +30,10 @@ class Navbar extends React.Component {
     const navbarStyle = {
       zIndex: '1',
     }
+    const linkStyle = {
+      textDecoration : 'none',
+      color : '#000'
+    }
     return (
       <div>
         <AppBar
@@ -46,24 +50,24 @@ class Navbar extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
-          <MenuItem onClick={this.handleClose}><Link to="/">Playlist</Link></MenuItem>
+          <MenuItem onClick={this.handleClose}><Link style={linkStyle} to="/">Playlist</Link></MenuItem>
           {this.state.name !== 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><Link to="/search">Find a song</Link></MenuItem>
+          <MenuItem onClick={this.handleClose}><Link style={linkStyle} to="/search">Find a song</Link></MenuItem>
           }
           {this.state.name === 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><a href="/locologin.html">Log In</a></MenuItem>
+          <MenuItem onClick={this.handleClose}><a style={linkStyle} href="/locologin.html">Log In</a></MenuItem>
           }
           {this.state.name === 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><a href="/locosignup.html">Sign Up</a></MenuItem>
+          <MenuItem onClick={this.handleClose}><a style={linkStyle} href="/locosignup.html">Sign Up</a></MenuItem>
           }
           {this.state.name !== 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><a href="/hostLogin">Sign In With Spotify</a></MenuItem>
+          <MenuItem onClick={this.handleClose}><a style={linkStyle} href="/hostLogin">Sign In With Spotify</a></MenuItem>
           }
           {this.state.name !== 'not logged in' &&
-          <MenuItem onClick={this.handleClose}><a href="/logout">Log Out</a></MenuItem>
+          <MenuItem onClick={this.handleClose}><a style={linkStyle} href="/logout">Log Out</a></MenuItem>
           }
         </Drawer>
-      </div>      
+      </div>
     )
   }
 }

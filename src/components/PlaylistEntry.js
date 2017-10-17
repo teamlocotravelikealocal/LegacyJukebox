@@ -15,6 +15,18 @@ const PlaylistEntry = (props) => {
     props.handlePlay(props.Song);
   }
 
+  const cardContainerStyle = {
+    position: 'relative',
+    width: '283px',
+    display: 'inline-block',
+    border: 'none',
+    backgroundColor: '#fff',
+    verticalAlign: 'top',
+    minHeight: '334px',
+    marginBottom: '20px',
+    marginRight: '22px',
+    maxWidth: '100%'
+  }
   const cardStyle = {
     display: 'block',
     margin: '40px',
@@ -28,30 +40,38 @@ const PlaylistEntry = (props) => {
   const containerStyle = {
     height: '300px'
   }
+
   const divStyle = {
     textAlign: 'center'
   }
+
   const buttonStyle = {
    margin: '5px'
   }
+
   const indexStyle = {
     position: 'relative',
     top: '-20px',
     left: '95px'
   }
 
+  const titleWrapStyle = {
+    overflow: 'visible',
+    height: '119px'
+  }
+
   return (
-      <div>
+      <div style={cardContainerStyle}>
         <Card style={cardStyle}>
         <FloatingActionButton style={indexStyle}>{props.index}</FloatingActionButton>
           <CardMedia>
             <img src={props.Song.image} alt="" />
           </CardMedia>
-          <CardTitle title={props.Song.name} subtitle={props.Song.artist} />
+          <CardTitle style={titleWrapStyle} title={props.Song.name} subtitle={props.Song.artist} />
           <CardText>
             Added by: {props.Song.userName}
           </CardText>
-         
+
           <CardActions>
             <div style={divStyle}>
               {props.user !== 'not logged in' &&
@@ -66,7 +86,7 @@ const PlaylistEntry = (props) => {
               }
             </div>
           </CardActions>
-          
+
       </Card>
     </div>
   )

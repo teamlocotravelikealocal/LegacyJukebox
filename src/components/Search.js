@@ -117,12 +117,53 @@ class Search extends React.Component{
   render() {
     const styles = {
       inside: {
-        width: '30%',
-        display: 'inline-block'
+        display: 'block'
       },
       textAlign: 'center',
       width: '100%',
       height: '100%'
+    }
+
+    const textStyle = {
+      textAlign: 'center',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 'bold',
+      marginTop: '40px',
+      color: '#128d9c'
+    }
+
+    const selectStyle = {
+      width: '250px',
+      borderRadius: '10px',
+      backgroundColor: '#fff',
+      WebkitBorderRadius: '10px',
+      padding: '12px 36px',
+      fontSize: '16px',
+      border: '1.5px solid #dbd9d9',
+      color: '#d8d8d8',
+      appearance: 'none',
+      WebkitAppearance: 'none',
+      cursor: 'pointer',
+      marginBottom: '40px'
+    }
+
+    const listStyle = {
+      float: 'left',
+      width: '100%'
+    }
+
+    const listItemStyle = {
+      textAlign : 'left',
+      fontSize: '21px',
+      lineHeight: '30px'
+    }
+
+    const pStyle = {
+      textAlign: 'left',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 'bold',
+      marginLeft: '20px',
+      color: 'rgb(18, 141, 156)'
     }
     return (
       <div style={styles}>
@@ -131,14 +172,14 @@ class Search extends React.Component{
         <TextField name="selectUser" onChange={this.onChange} hintText="Search a song"/>
         <br />
         {this.state.usersSongs &&
-        <span>Remaining songs to add: {4 - this.state.usersSongs.length}</span>
+        <span style={textStyle}>Remaining songs to add: {4 - this.state.usersSongs.length}</span>
         }
         {/* <br />
         <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link> */}
         <br />
         <br />
-        <select onChange={this.searchByChange} value={this.state.searchByValue}>
+        <select style={selectStyle} onChange={this.searchByChange} value={this.state.searchByValue}>
           <option value='Search By Artist Name'>Search By Artist Name</option>
           <option value='Search By Track Name'>Search By Track Name</option>
         </select>
@@ -147,6 +188,16 @@ class Search extends React.Component{
         {this.state.usersSongs && this.state.usersSongs.length < 4 &&
         <RaisedButton onClick={this.onSearch} label="Search"/>
         }
+        <p style={pStyle}>Added by you:</p>
+          <ul style={listStyle}>
+          {
+            this.state.usersSongs && this.state.usersSongs.map((song, i) => {
+              return (
+                <li style={listItemStyle} key={i}>{song.name}, {song.artist}</li>
+              )
+            })
+          }
+          </ul>
         <div>
         {
         this.state.results && this.state.results.map((result, i) => {
@@ -156,15 +207,6 @@ class Search extends React.Component{
         })
       }
       </div>
-          <ul>
-          {
-            this.state.usersSongs && this.state.usersSongs.map((song, i) => {
-              return (
-                <li key={i}>{song.name}, {song.artist}</li>
-              )
-            })
-          }
-          </ul>
         </div>
      </div>
     )

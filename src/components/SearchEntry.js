@@ -5,6 +5,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 
 const SearchEntry = (props) => {
+  {console.log(props.Result)}
   const clickHandler = () => {
     props.onAdd(props.Result);
   }
@@ -17,13 +18,22 @@ const SearchEntry = (props) => {
     float:'left',
     padding: '2px'
   }
+
+  const searchEntryTitleStyle = {
+    overflow: 'visible',
+    height: '185px'
+  }
   return(
     <div>
       <Card style={cardStyle}>
         <CardMedia>
-          <img src={props.Result.image} alt="" />
+        {/*
+          <video controls="" autoplay="" name="media">
+            <source src="{props.Result.preview_url}" type="audio/mpeg" />
+          </video>
+        */}
         </CardMedia>
-        <CardTitle title={props.Result.name} subtitle={props.Result.artists[0].name} />
+        <CardTitle style={searchEntryTitleStyle} title={props.Result.name} subtitle={props.Result.artists[0].name} />
         <CardActions>
           <div>
             <FloatingActionButton onClick={clickHandler} mini={true}>
