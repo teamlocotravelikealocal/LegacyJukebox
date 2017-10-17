@@ -27,7 +27,11 @@ const SearchEntry = (props) => {
     <div>
       <Card style={cardStyle}>
         <CardMedia>
-          <iframe src={'https://embed.spotify.com/?uri=spotify:track:' + props.Result.id} width="300" height="280" frameBorder="0" allowTransparency="true"></iframe>
+        {/*
+          <video controls="" autoplay="" name="media">
+            <source src="{props.Result.preview_url}" type="audio/mpeg" />
+          </video>
+        */}
         </CardMedia>
         <CardTitle style={searchEntryTitleStyle} title={props.Result.name} subtitle={props.Result.artists[0].name} />
         <CardActions>
